@@ -10,7 +10,7 @@
     <div v-for="country in filteredCountries" :key="country.id">
       <h2>{{ country }}</h2>
     </div>
-    <b-button @click="callCountry">Get country info</b-button>
+    <!-- <b-button @click="callCountry">Get country info</b-button> -->
   </div>
 </template>
 
@@ -28,9 +28,9 @@ export default {
     this.$store.dispatch('loadCountries')
   },
   methods: {
-    callCountry() {
-      this.$store.dispatch('loadByCountry', this.search)
-    }
+    // callCountry() {
+    //   this.$store.dispatch('loadByCountry', this.search)
+    // }
   },
   watch: {
 
