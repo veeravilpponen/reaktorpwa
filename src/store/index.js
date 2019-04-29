@@ -4,27 +4,45 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-const MY_FUNCTION = 'MY_FUNCTION'
+const SET_COUNTRIES = 'SET_COUNTRIES'
+// const SET_COUNTRYINFO = 'SET_COUNTRYINFO'
 
 const store = {
   state: function () {
-    greeting: {}
+    let baseState = {
+      countries: []
+      // ,
+      // countryInfo: []
+    }
+    return baseState
   },
   mutations: {
-    [MY_FUNCTION]: (state, { greeting }) => {
-      state.greeting = greeting
-    },
+    [SET_COUNTRIES]: (state, { countries }) => {
+      state.countries = countries
+    }
+    // ,
+    // [SET_COUNTRYINFO]: (state, { countryInfo }) => {
+    //   state.countryInfo = countryInfo
+    // },
   },
   actions: {
-    loadThing ({ commit, state }) {
-      axios.get('http://localhost:5000/hello').then((response) => {
-        commit(MY_FUNCTION, { greeting: response.data.greeting })
-        console.log(response.data.greeting)
+    loadCountries ({ commit, state }) {
+      axios.get('http://localhost:5000/countries').then((response) => {
+        commit(SET_COUNTRIES, { countries: response.data.countries })
       })
-    },
+    }
+    // ,
+    // loadbyCountry ({ commit, state }, country) {
+    //   axios.post('http://localhost:5000/country', country).then((response) => {
+    //     console.log(response.data)
+    //     commit(SET_COUNTRYINFO, { countryInfo: response.data.result })
+    //   })
+    // },
   },
   getters: {
-    greeting: state => state.greeting,
+    countries: state => state.countries
+    // ,
+    // countryInfo: state => state.countryInfo
   }
 }
 
