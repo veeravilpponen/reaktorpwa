@@ -7,10 +7,11 @@
         <label><input type="checkbox" value="">Per capita</label>
       </div>
     </div>
+    <p>{{ countryInfo }}</p>
     <div v-for="country in filteredCountries" :key="country.id">
       <h2>{{ country }}</h2>
     </div>
-    <b-button @click="callCountry">Get country info</b-button>
+    <!-- <b-button @click="callCountry">Get country info</b-button> -->
   </div>
 </template>
 
@@ -26,17 +27,10 @@ export default {
   },
   mounted: function () {
     this.$store.dispatch('loadCountries')
-  },
-  methods: {
-    callCountry() {
-      this.$store.dispatch('loadByCountry', this.search)
-    }
-  },
-  watch: {
-
+    this.$store.dispatch('loadByCountry', { country: "Finland" })
   },
   computed: {
-    ...mapGetters(['countries']),
+    ...mapGetters(['countries', 'countryInfo']),
     filteredCountries() {
       return store.getters.countries.filter(item => {
          return item.toLowerCase().indexOf(this.search.toLowerCase()) > -1
@@ -44,6 +38,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style>

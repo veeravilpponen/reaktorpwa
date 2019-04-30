@@ -29,8 +29,8 @@ const store = {
         commit(SET_COUNTRIES, { countries: response.data.countries })
       })
     },
-    loadbyCountry ({ commit, state }, country) {
-      axios.post('http://localhost:5000/country', country).then((response) => {
+    loadByCountry ({ commit, state }, data) {
+      axios.post('http://localhost:5000/country', { data }).then((response) => {
         console.log(response.data)
         commit(SET_COUNTRYINFO, { countryInfo: response.data.result })
       })
