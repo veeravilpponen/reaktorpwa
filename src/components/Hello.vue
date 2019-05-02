@@ -1,19 +1,19 @@
 <template>
-  <div class="container">
+  <b-container class="container">
     <h3>CO2 -Emissions</h3>
-    <p>{{ this.selected }}</p>
-    <cool-select id="search_filter" v-model="selected" :items="countries" placeholder="Select name">
-      <div id="per_capita" class="checkbox">
-        <label><input type="checkbox" value="">Per capita</label>
-      </div>
+    <p>{{ this.selected_country }}</p>
+    <cool-select id="search_filter" v-model="selected_country" :items="countries" placeholder="Select country">
       <template slot="item" slot-scope="{ item }">
         <div style="display: flex;">
           <div>{{ item }}</div>
         </div>
       </template>
     </cool-select>
-    <!-- <p>{{ countryInfo }}</p> -->
-  </div>
+    <div id="check_capita" class="checkbox">
+      <label><input type="checkbox" v-model="per_capita" >Per capita</label>
+    </div>
+    <b-table hover :fields="fields" :items="countryEmissions"></b-table>
+  </b-container>
 </template>
 
 <script>
@@ -29,17 +29,27 @@ export default {
   },
   data() {
     return {
-      selected: null,
+      fields: ['year','emission'],
+      selected_country: null,
+      per_capita: null
+    }
+  },
+  // when the value of selected country changes, call defined function
+  watch: {
+    selected_country: function () {
+      this.loadEmissions()
     }
   },
   mounted: function () {
     this.$store.dispatch('loadCountries')
-    this.$store.dispatch('loadByCountry', { country: "Finland" })
   },
   computed: {
-    ...mapGetters(['countries', 'countryInfo']),
+    ...mapGetters(['countries', 'countryEmissions']),
   },
   methods: {
+    loadEmissions: function () {
+      this.$store.dispatch('loadCountryEmissions', { country: this.selected_country })
+    }
   }
 }
 
