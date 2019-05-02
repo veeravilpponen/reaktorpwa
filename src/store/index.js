@@ -5,44 +5,40 @@ import axios from 'axios'
 Vue.use(Vuex)
 
 const SET_COUNTRIES = 'SET_COUNTRIES'
-// const SET_COUNTRYINFO = 'SET_COUNTRYINFO'
+const SET_COUNTRY_EMISSIONS = 'SET_COUNTRY_EMISSIONS'
 
 const store = {
   state: function () {
     let baseState = {
-      countries: []
-      // ,
-      // countryInfo: []
+      countries: [],
+      countryEmissions: []
     }
     return baseState
   },
   mutations: {
     [SET_COUNTRIES]: (state, { countries }) => {
       state.countries = countries
-    }
-    // ,
-    // [SET_COUNTRYINFO]: (state, { countryInfo }) => {
-    //   state.countryInfo = countryInfo
-    // },
+    },
+    [SET_COUNTRY_EMISSIONS]: (state, { countryEmissions }) => {
+      state.countryEmissions = countryEmissions
+    },
   },
   actions: {
     loadCountries ({ commit, state }) {
       axios.get('http://localhost:5000/countries').then((response) => {
         commit(SET_COUNTRIES, { countries: response.data.countries })
       })
-    }
-    // ,
-    // loadbyCountry ({ commit, state }, country) {
-    //   axios.post('http://localhost:5000/country', country).then((response) => {
-    //     console.log(response.data)
-    //     commit(SET_COUNTRYINFO, { countryInfo: response.data.result })
-    //   })
-    // },
+    },
+    loadCountryEmissions ({ commit, state }, data) {
+      axios.post('http://localhost:5000/country', { data }).then((response) => {
+        commit(SET_COUNTRY_EMISSIONS, { countryEmissions: response.data.results })
+        console.log(response)
+      })
+    },
   },
   getters: {
-    countries: state => state.countries
-    // ,
-    // countryInfo: state => state.countryInfo
+    countries: state => state.countries,
+    countryEmissions: state => state.countryEmissions
   }
 }
 

@@ -1,56 +1,66 @@
 <template>
-  <div>
+  <b-container class="container">
     <h3>CO2 -Emissions</h3>
-    <div class="form-group">
-      <input id="search_filter" type="text" placeholder="Search for country" v-model="search">
-      <div id="per_capita" class="checkbox">
-        <label><input type="checkbox" value="">Per capita</label>
-      </div>
+    <p>{{ this.selected_country }}</p>
+    <cool-select id="search_filter" v-model="selected_country" :items="countries" placeholder="Select country">
+      <template slot="item" slot-scope="{ item }">
+        <div style="display: flex;">
+          <div>{{ item }}</div>
+        </div>
+      </template>
+    </cool-select>
+    <div id="check_capita" class="checkbox">
+      <label><input type="checkbox" v-model="per_capita" >Per capita</label>
     </div>
-    <div v-for="country in filteredCountries" :key="country.id">
-      <h2>{{ country }}</h2>
-    </div>
-    <!-- <b-button @click="callCountry">Get country info</b-button> -->
-  </div>
+    <b-table hover :fields="fields" :items="countryEmissions"></b-table>
+  </b-container>
 </template>
 
 <script>
+
 import { mapGetters } from 'vuex'
 import store from '../store'
+import { CoolSelect } from "vue-cool-select";
+
 export default {
   name: 'Hello',
+  components: {
+    CoolSelect
+  },
   data() {
     return {
-      search: '',
+      fields: ['year','emission'],
+      selected_country: null,
+      per_capita: null
+    }
+  },
+  // when the value of selected country changes, call defined function
+  watch: {
+    selected_country: function () {
+      this.loadEmissions()
     }
   },
   mounted: function () {
     this.$store.dispatch('loadCountries')
   },
-  methods: {
-    // callCountry() {
-    //   this.$store.dispatch('loadByCountry', this.search)
-    // }
-  },
-  watch: {
-
-  },
   computed: {
-    ...mapGetters(['countries']),
-    filteredCountries() {
-      return store.getters.countries.filter(item => {
-         return item.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-      })
+    ...mapGetters(['countries', 'countryEmissions']),
+  },
+  methods: {
+    loadEmissions: function () {
+      this.$store.dispatch('loadCountryEmissions', { country: this.selected_country })
     }
   }
 }
+
 </script>
 
 <style>
+  /* .container {
+    text-align: center;
+  } */
+
   #search_filter {
-    background-image: url('/assets/search.png');
-    background-position: 10px 12px;
-    background-repeat: no-repeat;
     width: 40%;
     padding: 12px 20px 12px 40px;
     border: 1px solid #ddd;
