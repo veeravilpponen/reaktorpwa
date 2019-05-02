@@ -31,12 +31,15 @@ export default {
     return {
       fields: ['year','emission'],
       selected_country: null,
-      per_capita: null
+      per_capita: false
     }
   },
   // when the value of selected country changes, call defined function
   watch: {
     selected_country: function () {
+      this.loadEmissions()
+    },
+    per_capita: function () {
       this.loadEmissions()
     }
   },
@@ -48,7 +51,7 @@ export default {
   },
   methods: {
     loadEmissions: function () {
-      this.$store.dispatch('loadCountryEmissions', { country: this.selected_country })
+      this.$store.dispatch('loadCountryEmissions', { country: this.selected_country, percapita: this.per_capita })
     }
   }
 }

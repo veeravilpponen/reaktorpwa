@@ -30,7 +30,7 @@ const store = {
       })
     },
     loadCountryEmissions ({ commit, state }, data) {
-      axios.post('http://localhost:5000/country', { data }).then((response) => {
+      axios.post('http://localhost:5000/emissions', { data }).then((response) => {
         commit(SET_COUNTRY_EMISSIONS, { countryEmissions: response.data.results })
         console.log(response)
       })
