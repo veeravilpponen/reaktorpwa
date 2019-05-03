@@ -58,21 +58,35 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
   .my-container {
     width: 70%;
-    background-color: white;
+    background-color: pink;
     padding: 5%;
+
+    // tablets
+    @media (max-width: 768px) {
+      width: 80%;
+    }
+    // phones
+    @media (max-width: 475px) {
+      width: 90%;
+      padding: 5% 0 5% 0;
+    }
   }
 
   .inputs {
     width: 50%;
     margin: auto;
 
-    @media (min-width: 576px) {
-
+    // tablets
+    @media (max-width: 768px) {
+      width: 70%
+    }
+    // phones
+    @media (max-width: 475px) {
+      width: 90%
     }
   }
-
 
 </style>
