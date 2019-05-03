@@ -13,6 +13,7 @@
     <h4 v-if="this.selected_country.text != 'Search / select a country'">{{ this.selected_country.text }}</h4>
     <br>
     <b-table v-if="this.selected_country.text != null && this.selected_country.text != 'Search / select a country'" hover :fields="fields" :items="countryEmissions"></b-table>
+    <img v-if="this.selected_country.text == null || this.selected_country.text == 'Search / select a country'" class="image" src="../assets/pollution.jpg" alt="pollution"></img>
   </b-container>
 </template>
 
@@ -61,7 +62,7 @@ export default {
 <style lang="scss">
   .my-container {
     width: 70%;
-    background-color: pink;
+    background-color: rgba(255, 255, 255, 0.7);
     padding: 5%;
 
     // tablets
@@ -87,6 +88,13 @@ export default {
     @media (max-width: 475px) {
       width: 90%
     }
+  }
+
+  .image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+
   }
 
 </style>
