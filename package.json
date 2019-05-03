@@ -17,6 +17,7 @@
     "vue": "^2.5.2",
     "vue-cool-select": "^2.10.2",
     "vue-router": "^3.0.1",
+    "vue-search-select": "^2.8.3",
     "vue-simple-search-dropdown": "^1.0.1",
     "vuex": "^3.1.0"
   },

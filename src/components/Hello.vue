@@ -1,18 +1,18 @@
 <template>
-  <b-container class="container">
+  <b-container class="my-container">
     <h3>CO2 -Emissions</h3>
-    <p>{{ this.selected_country }}</p>
-    <cool-select id="search_filter" v-model="selected_country" :items="countries" placeholder="Select country">
-      <template slot="item" slot-scope="{ item }">
-        <div style="display: flex;">
-          <div>{{ item }}</div>
-        </div>
-      </template>
-    </cool-select>
-    <div id="check_capita" class="checkbox">
-      <label><input type="checkbox" v-model="per_capita" >Per capita</label>
+    <div class="inputs">
+      <model-select v-model="selected_country" :options="countries" placeholder="Search select a country">
+      </model-select>
+      <br>
+      <div id="check_capita" class="checkbox">
+        <label><input type="checkbox" v-model="per_capita" >Per capita</label>
+      </div>
     </div>
-    <b-table hover :fields="fields" :items="countryEmissions"></b-table>
+    <br>
+    <h4 v-if="this.selected_country.text != 'Search / select a country'">{{ this.selected_country.text }}</h4>
+    <br>
+    <b-table v-if="this.selected_country.text != null && this.selected_country.text != 'Search / select a country'" hover :fields="fields" :items="countryEmissions"></b-table>
   </b-container>
 </template>
 
@@ -20,22 +20,22 @@
 
 import { mapGetters } from 'vuex'
 import store from '../store'
-import { CoolSelect } from "vue-cool-select";
+import { ModelSelect } from 'vue-search-select'
 
 export default {
   name: 'Hello',
   components: {
-    CoolSelect
+    ModelSelect,
   },
   data() {
     return {
-      fields: ['year','emission'],
-      selected_country: null,
+      fields: ['year','emissions'],
+      selected_country: { text: null },
       per_capita: false
     }
   },
-  // when the value of selected country changes, call defined function
   watch: {
+    // when the value of selected country / per capita opttion changes, call defined function
     selected_country: function () {
       this.loadEmissions()
     },
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     loadEmissions: function () {
-      this.$store.dispatch('loadCountryEmissions', { country: this.selected_country, percapita: this.per_capita })
+      this.$store.dispatch('loadCountryEmissions', { country: this.selected_country.text, percapita: this.per_capita })
     }
   }
 }
@@ -59,14 +59,20 @@ export default {
 </script>
 
 <style>
-  /* .container {
-    text-align: center;
-  } */
-
-  #search_filter {
-    width: 40%;
-    padding: 12px 20px 12px 40px;
-    border: 1px solid #ddd;
-    margin-bottom: 12px;
+  .my-container {
+    width: 70%;
+    background-color: white;
+    padding: 5%;
   }
+
+  .inputs {
+    width: 50%;
+    margin: auto;
+
+    @media (min-width: 576px) {
+
+    }
+  }
+
+
 </style>
