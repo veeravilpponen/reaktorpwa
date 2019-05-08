@@ -1,6 +1,7 @@
 <template>
   <b-container class="my-container">
-    <h3>CO2 -Emissions</h3>
+    <h3>CO<sup>2</sup> -Emissions</h3>
+    <p>Check carbon dioxide emissions in your country</p>
     <div class="inputs">
       <model-select v-model="selected_country" :options="countries" placeholder="Search select a country">
       </model-select>
@@ -13,7 +14,6 @@
     <h4 v-if="this.selected_country.text != 'Search / select a country'">{{ this.selected_country.text }}</h4>
     <br>
     <b-table v-if="this.selected_country.text != null && this.selected_country.text != 'Search / select a country'" hover :fields="fields" :items="countryEmissions"></b-table>
-    <img v-if="this.selected_country.text == null || this.selected_country.text == 'Search / select a country'" class="image" src="../assets/pollution.jpg" alt="pollution"></img>
   </b-container>
 </template>
 
@@ -26,13 +26,13 @@ import { ModelSelect } from 'vue-search-select'
 export default {
   name: 'Hello',
   components: {
-    ModelSelect,
+    ModelSelect
   },
   data() {
     return {
       fields: ['year','emissions'],
       selected_country: { text: null },
-      per_capita: false
+      per_capita: false,
     }
   },
   watch: {
@@ -60,20 +60,9 @@ export default {
 </script>
 
 <style lang="scss">
-  .my-container {
-    width: 70%;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 5%;
 
-    // tablets
-    @media (max-width: 768px) {
-      width: 80%;
-    }
-    // phones
-    @media (max-width: 475px) {
-      width: 90%;
-      padding: 5% 0 5% 0;
-    }
+  body {
+    min-height: 800px;
   }
 
   .inputs {
