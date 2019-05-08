@@ -1,6 +1,7 @@
 <template>
   <b-container class="my-container">
-    <h3>CO2 -Emissions</h3>
+    <h3>CO<sup>2</sup> -Emissions</h3>
+    <p>Check carbon dioxide emissions in your country</p>
     <div class="inputs">
       <model-select v-model="selected_country" :options="countries" placeholder="Search select a country">
       </model-select>
@@ -25,13 +26,13 @@ import { ModelSelect } from 'vue-search-select'
 export default {
   name: 'Hello',
   components: {
-    ModelSelect,
+    ModelSelect
   },
   data() {
     return {
       fields: ['year','emissions'],
       selected_country: { text: null },
-      per_capita: false
+      per_capita: false,
     }
   },
   watch: {
@@ -58,21 +59,31 @@ export default {
 
 </script>
 
-<style>
-  .my-container {
-    width: 70%;
-    background-color: white;
-    padding: 5%;
+<style lang="scss">
+
+  body {
+    min-height: 800px;
   }
 
   .inputs {
     width: 50%;
     margin: auto;
 
-    @media (min-width: 576px) {
-
+    // tablets
+    @media (max-width: 768px) {
+      width: 70%
+    }
+    // phones
+    @media (max-width: 475px) {
+      width: 90%
     }
   }
 
+  .image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+
+  }
 
 </style>
