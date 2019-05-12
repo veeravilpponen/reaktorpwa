@@ -1,41 +1,59 @@
+
 <template>
-  <b-container class="my-container">
-    <div class="graph">
-      <line-chart :chart-data="datacollection"></line-chart>
-    </div>
-  </b-container>
+  <div class="small">
+    <line-chart :chart-data="datacollection"></line-chart>
+  </div>
 </template>
 
 <script>
 import LineChart from './LineChart.js'
-
 export default {
+  name: 'Compare',
+  props:['country1', 'country2', 'years'],
   components: {
     LineChart
   },
   data () {
     return {
-      datacollection: null
+      datacollection: {}
     }
   },
   mounted () {
     this.fillData()
   },
+  watch: {
+    country1: function () {
+      this.fillData()
+    }
+  },
   methods: {
     fillData () {
-      this.datacollection = {
-        labels: ['2000', '2001', '2002'],
-        datasets: [
-          {
-            label: 'Emissions 1',
-            backgroundColor: 'rgba(173, 216, 230, 0.6)',
-            data: ['20140', '20594', '22043']
-          }, {
-            label: 'Emissions 2',
-            backgroundColor: 'rgba(,190, 190, 190 0.6)',
-            data: ['17190', '18210', '17081']
-          }
-        ]
+      if (this.country1 && this.country2) {
+        this.datacollection = {
+          labels: this.years,
+          datasets: [
+            {
+              label: this.country1.name,
+              backgroundColor: 'rgba(173, 216, 230, 0.6)',
+              data: this.country1.data
+            }, {
+              label: this.country2.name,
+              backgroundColor: 'rgba(,190, 190, 190 0.01)',
+              data: this.country2.data
+            }
+          ]
+        }
+      } else {
+        this.datacollection = {
+          labels: this.years,
+          datasets: [
+            {
+              label: this.country1.name,
+              backgroundColor: 'rgba(173, 216, 230, 0.6)',
+              data: this.country1.data
+            }
+          ]
+        }
       }
     }
   }
@@ -43,8 +61,5 @@ export default {
 </script>
 
 <style>
-  .graph {
-    max-width: 600px;
-    margin: auto;
-  }
+
 </style>

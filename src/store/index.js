@@ -6,12 +6,14 @@ Vue.use(Vuex)
 
 const SET_COUNTRIES = 'SET_COUNTRIES'
 const SET_COUNTRY_EMISSIONS = 'SET_COUNTRY_EMISSIONS'
+const SET_COMPARE_EMISSIONS = 'SET_COMPARE_EMISSIONS'
 
 const store = {
   state: function () {
     let baseState = {
       countries: [],
-      countryEmissions: []
+      countryEmissions: [],
+      compareEmissions: { 'years': null }
     }
     return baseState
   },
@@ -22,6 +24,9 @@ const store = {
     [SET_COUNTRY_EMISSIONS]: (state, { countryEmissions }) => {
       state.countryEmissions = countryEmissions
     },
+    [SET_COMPARE_EMISSIONS]: (state, { compareEmissions }) => {
+      state.compareEmissions = compareEmissions
+    }
   },
   actions: {
     loadCountries ({ commit, state }) {
@@ -34,10 +39,16 @@ const store = {
         commit(SET_COUNTRY_EMISSIONS, { countryEmissions: response.data.results })
       })
     },
+    loadCompareEmissions ({ commit, state }, data) {
+      axios.post('http://localhost:5000/compare', { data }).then((response) => {
+        commit(SET_COMPARE_EMISSIONS, { compareEmissions: response.data.results })
+      })
+    }
   },
   getters: {
     countries: state => state.countries,
-    countryEmissions: state => state.countryEmissions
+    countryEmissions: state => state.countryEmissions,
+    compareEmissions: state => state.compareEmissions
   }
 }
 
