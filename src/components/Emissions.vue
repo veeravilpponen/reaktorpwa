@@ -96,14 +96,7 @@ export default {
   .inputs {
     width: 50%;
     margin: auto;
-    // overflow: hidden;
-    //
-    // .select1 {
-    //   float: left;
-    // }
-    // .select2 {
-    //   overflow: hidden;
-    // }
+
     // tablets
     @media (max-width: 768px) {
       width: 70%
@@ -118,7 +111,6 @@ export default {
     max-width: 100%;
     height: auto;
     display: block;
-
   }
 
   .charts {
