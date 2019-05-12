@@ -1,7 +1,7 @@
 
 <template>
   <div class="small">
-    <line-chart :chart-data="datacollection"></line-chart>
+    <line-chart :chart-data="datacollection" v-bind:options="options"></line-chart>
   </div>
 </template>
 
@@ -15,7 +15,29 @@ export default {
   },
   data () {
     return {
-      datacollection: {}
+      datacollection: {},
+      // to be passed to LineChart as props, styling and axis names
+      options: {
+        scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Emissions (kt)',
+              fontStyle: 'bold'
+            }
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Years',
+              fontStyle: 'bold'
+            },
+            // gridLines: {
+            //   color: ['black']
+            // }
+          }]
+        }
+      }
     }
   },
   mounted () {
@@ -34,12 +56,14 @@ export default {
           datasets: [
             {
               label: this.country1.name,
-              backgroundColor: 'rgba(173, 216, 230, 0.6)',
+              backgroundColor: 'rgba(173, 216, 230, 0.5)',
+              borderColor: 'rgba(121,151,161, 0.5)',
               data: this.country1.data
             },
             {
               label: this.country2.name,
-              backgroundColor: 'rgba(,190, 190, 190 0.01)',
+              backgroundColor: 'rgba(190, 190, 190, 0.8)',
+              borderColor: 'rgba(133,133,133, 0.5)',
               data: this.country2.data
             }
           ]
@@ -50,7 +74,8 @@ export default {
           datasets: [
             {
               label: this.country1.name,
-              backgroundColor: 'rgba(173, 216, 230, 0.6)',
+              backgroundColor: 'rgba(173, 216, 230, 0.5)',
+              borderColor: 'rgba(173, 216, 230, 1)',
               data: this.country1.data
             }
           ]

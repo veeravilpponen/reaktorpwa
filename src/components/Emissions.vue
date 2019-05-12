@@ -5,7 +5,7 @@
     <div class="inputs">
       <model-select class="select1" v-model="selected_country1" :options="countries" placeholder="Search select a country">
       </model-select>
-      <b-button class="button" v-if="show_country2 == false" @click="showCountry2()">Add country for comparizon</b-button>
+      <b-button class="button" v-if="show_country2 == false" @click="showCountry2()">Add country for comparison</b-button>
       <model-select v-if="show_country2" class="select2" v-model="selected_country2" :options="countries" placeholder="Search select a country">
       </model-select>
       <b-button class="button" v-if="show_country2" @click="hideCountry2()">Show one country only</b-button>
