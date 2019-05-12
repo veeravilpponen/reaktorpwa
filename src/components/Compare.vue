@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     fillData () {
-      if (this.country1 && this.country2) {
+      if (this.country1 && this.country2 && this.country2.name != null) {
         this.datacollection = {
           labels: this.years,
           datasets: [
@@ -36,7 +36,8 @@ export default {
               label: this.country1.name,
               backgroundColor: 'rgba(173, 216, 230, 0.6)',
               data: this.country1.data
-            }, {
+            },
+            {
               label: this.country2.name,
               backgroundColor: 'rgba(,190, 190, 190 0.01)',
               data: this.country2.data
