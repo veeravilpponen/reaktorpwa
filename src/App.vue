@@ -17,13 +17,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* padding-bottom: 5%;
-  padding-top: 5%; */
-  /* background-color: lightgrey;
-  background-image: url('./assets/pollution.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover; */
 }
 
 html {
@@ -42,9 +35,9 @@ html {
 .my-container {
   height: 100%;
   min-height: 800px;
-  width: 70%;
+  width: 60%;
   background-color: rgba(255, 255, 255, 0.7);
-  padding: 5%;
+  padding: 3%;
 
   // tablets
   @media (max-width: 768px) {
@@ -53,7 +46,7 @@ html {
   // phones
   @media (max-width: 475px) {
     width: 90%;
-    padding: 5% 0 5% 0;
+    padding: 3% 0 3% 0;
   }
 }
 
