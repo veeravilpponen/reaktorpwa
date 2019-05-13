@@ -3,14 +3,14 @@
     <h3>CO<sup>2</sup> -Emissions</h3>
     <p>Check carbon dioxide emissions in your country</p>
     <div class="inputs">
-      <model-select class="select1" v-model="selected_country1" :options="countries" placeholder="Search select a country">
+      <model-select class="select1" v-model="selected_country1" :options="countries" placeholder="Search / select a country">
       </model-select>
       <b-button class="button" v-if="show_country2 == false" @click="showCountry2()">Add country for comparison</b-button>
-      <model-select v-if="show_country2" class="select2" v-model="selected_country2" :options="countries" placeholder="Search select a country">
+      <model-select v-if="show_country2" class="select2" v-model="selected_country2" :options="countries" placeholder="Search / select a country">
       </model-select>
       <b-button class="button" v-if="show_country2" @click="hideCountry2()">Show one country only</b-button>
       <br>
-      <div id="check_capita" class="checkbox">
+      <div v-if="selected_country1.text != null" id="check_capita" class="checkbox">
         <label><input type="checkbox" v-model="per_capita" >Per capita</label>
       </div>
     </div>
@@ -38,8 +38,8 @@ export default {
   data() {
     return {
       fields: ['year','emissions'],
-      selected_country1: { text: null },
-      selected_country2: { text: null },
+      selected_country1: { value: null, text: null },
+      selected_country2: { value: null, text: null },
       per_capita: false,
       show_country2: false
     }
@@ -48,7 +48,7 @@ export default {
     // when the value of selected country / per capita option changes, call defined method
     selected_country1: function () {
       // we know that country1 changed, now we need to if country2 has some value
-      if (this.selected_country2.text == null || this.selected_country1.text == "Search / select a country") {
+      if (this.selected_country2.text == null) {
         // loads emissions for ONE country
         this.loadEmissions()
       } else {
@@ -57,7 +57,7 @@ export default {
       }
     },
     selected_country2: function () {
-      if (this.selected_country1.text == null || this.selected_country2.text == "Search / select a country") {
+      if (this.selected_country1.text == null) {
         this.loadEmissions()
       } else {
         this.loadCompareEmissions()
@@ -92,7 +92,7 @@ export default {
     hideCountry2: function () {
       this.show_country2 = false
       // update country 2 to be null
-      this.selected_country2 = { text: null }
+      this.selected_country2 = { value: null, text: null }
       // and then make an api call to update one country to the chart
       this.loadEmissions()
     }
