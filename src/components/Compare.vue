@@ -9,14 +9,15 @@
 import LineChart from './LineChart.js'
 export default {
   name: 'Compare',
-  props:['country1', 'country2', 'years'],
+  props:['country1', 'country2', 'years', 'percapita'],
   components: {
     LineChart
   },
   data () {
     return {
+      // chart data
       datacollection: {},
-      // to be passed to LineChart as props, styling and axis names
+      // to be passed to LineChart as props, chart styling and axis names
       options: {
         scales: {
           yAxes: [{
@@ -31,10 +32,7 @@ export default {
               display: true,
               labelString: 'Years',
               fontStyle: 'bold'
-            },
-            // gridLines: {
-            //   color: ['black']
-            // }
+            }
           }]
         }
       }
@@ -50,6 +48,7 @@ export default {
   },
   methods: {
     fillData () {
+      // fill chart with data of two countries
       if (this.country1 && this.country2 && this.country2.name != null) {
         this.datacollection = {
           labels: this.years,
@@ -68,6 +67,7 @@ export default {
             }
           ]
         }
+      // fill chart with data of one country
       } else {
         this.datacollection = {
           labels: this.years,
@@ -81,6 +81,7 @@ export default {
           ]
         }
       }
+
     }
   }
 }

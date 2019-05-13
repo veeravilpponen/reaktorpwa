@@ -16,8 +16,8 @@
     </div>
     <br>
     <div class="charts">
-      <Compare v-if="compareEmissions.years && this.selected_country2.text != null" v-bind:country1="compareEmissions.countries[0]" v-bind:country2="compareEmissions.countries[1]" v-bind:years="compareEmissions.years" />
-      <Compare v-if="countryEmissions.years && this.selected_country2.text == null" v-bind:country1="countryEmissions.countries[0]" v-bind:years="countryEmissions.years" />
+      <Compare v-if="compareEmissions.years && this.selected_country2.text != null" v-bind:country1="compareEmissions.countries[0]" v-bind:country2="compareEmissions.countries[1]" v-bind:years="compareEmissions.years" v-bind:percapita="this.per_capita" />
+      <Compare v-if="countryEmissions.years && this.selected_country2.text == null" v-bind:country1="countryEmissions.countries[0]" v-bind:years="countryEmissions.years" v-bind:percapita="this.per_capita" />
     </div>
   </b-container>
 </template>
@@ -45,10 +45,9 @@ export default {
     }
   },
   watch: {
-    // when the value of selected country / per capita opttion changes, call defined function
+    // when the value of selected country / per capita option changes, call defined method
     selected_country1: function () {
       // we know that country1 changed, now we need to if country2 has some value
-      // or if country1 is changed
       if (this.selected_country2.text == null || this.selected_country1.text == "Search / select a country") {
         // loads emissions for ONE country
         this.loadEmissions()
@@ -85,12 +84,16 @@ export default {
     loadCompareEmissions: function () {
       this.$store.dispatch('loadCompareEmissions', { country1: this.selected_country1.text, country2: this.selected_country2.text, percapita: this.per_capita })
     },
+    // show country2 select input
     showCountry2: function () {
       this.show_country2 = true
     },
+    // hide country2 select input
     hideCountry2: function () {
       this.show_country2 = false
+      // update country 2 to be null
       this.selected_country2 = { text: null }
+      // and then make an api call to update one country to the chart
       this.loadEmissions()
     }
   }
